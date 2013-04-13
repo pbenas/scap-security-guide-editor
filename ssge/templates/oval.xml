@@ -1,0 +1,31 @@
+{% if name %}
+<def-group>
+    <definition class="compliance" id="{{ name.lower() }}" version="1">
+        <metadata>
+            <title>{{ name }}</title>
+            <affected family="unix" >
+                {% if platform %}<platform>{{ platform }}</platform>
+                {% else %}<platform>Red Hat Enterprise Linux 6</platform>{% endif %}
+            </affected>
+            <description>Description of definition {{ name }}</description>
+        </metadata>
+        <criteria>
+            <criterion test_ref="test_{{ name.lower() }}" comment="Comment for criterion {{ name }}"/>
+        </criteria>
+    </definition>
+
+    <!-- Following is example of simplest file content test. Feel free to replace with your own content. -->
+
+    <ind:textfilecontent54_test id="test_{{ name.lower() }}" version="1" check="all" comment="Comment for test {{ name }}">
+        <ind:object object_ref="object_{{ name.lower() }}"/>
+    </ind:textfilecontent54_test>
+
+    <ind:textfilecontent54_object id="object_{{ name.lower() }}" version="1" comment="Comment for object {{ name }}">
+        <ind:path>/etc</ind:path>
+        <ind:filename>passwd</ind:filename>
+        <ind:pattern operation="pattern match">nologin</ind:pattern>
+        <ind:instance datatype="int">1</ind:instance>
+    </ind:textfilecontent54_object>
+</def-group>
+{% endif %}
+

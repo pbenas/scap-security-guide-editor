@@ -1,0 +1,17 @@
+{% if name %}
+<Group id="{{ name.lower() }}">
+<title>{{ name }}</title>
+<description>
+Description of Group {{ name }}.
+</description>
+
+<Rule id="{{ name.lower() }}_fixme">
+<title>{{ name }}</title>
+<description>
+Description of Rule {{ name }}.
+</description>
+<oval id="FIXME"/>
+</Rule>
+
+</Group>
+{% endif %}

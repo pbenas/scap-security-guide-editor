@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<title>SCAP Editor</title>
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='editor.css') }}">
+</head>
+
+<body>
+<div class="modeselector">
+<form enctype="multipart/form-data" method="post" action="">
+    <p>Work with scap-security-guide project git</p>
+    <div class="selectfile">
+    {% if xccdffiles %}
+        <p>Select XCCDF file</p>
+        <p>
+            <select name="xccdffile">
+                {% for product in xccdffiles.keys() %}
+                    <optgroup label="{{ product }}">
+                        {% for file in xccdffiles[product]|sort(reverse=True) %}
+                            <option value="{{ file }}">{{ '/'.join(file.split('/')[4:]) }}</option>
+                        {% endfor %}
+                    </optgroup>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <input type="submit" name="xccdfStart" value="Open">
+            <input type="submit" name="xccdfDelete" value="Delete">
+            or
+            <input type="submit" name="xccdfNew" value="Create new">
+        </p>
+    {% endif %}
+    </div>
+
+    <div class="selectfile">
+    {% if ovalfiles %}
+        <p>Or select OVAL file</p>
+        <p>
+            <select name="ovalfile">
+                {% for product in ovalfiles.keys() %}
+                    <optgroup label="{{ product }}">
+                        {% for file in ovalfiles[product]|sort %}
+                            <option value="{{ file }}">{{ '/'.join(file.split('/')[-1:]) }}</option>
+                        {% endfor %}
+                    </optgroup>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <input type="submit" name="ovalStart" value="Open">
+            <input type="submit" name="ovalDelete" value="Delete">
+            or
+            <input type="submit" name="ovalNew" value="Create new">
+        </p>
+    {% endif %}
+    </div>
+
+    <p>Or upload your custom file for editing</p>
+    <input type="file" name="file">
+    <p><input type="submit" name="upload" value="Upload"></p>
+</form>
+</div>
+</body>
+</html>

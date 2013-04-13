@@ -1,0 +1,64 @@
+body {
+    background : #111111;
+    color : white;
+    font-family : monospace;
+    min-height : 100%;
+}
+
+#making {
+    color : #FF7F00;
+    display : none;
+}
+
+.editor {
+    width : 1000px;
+    height : 800px;
+    position : absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin : auto;
+    /*
+    margin-left : auto;
+    margin-right : auto;
+    */
+}
+
+.CodeMirror-wrap {
+    margin-bottom : 10px;
+}
+
+.modeselector {
+    width : 40em;
+    height : 28em;
+    position : absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin : auto;
+}
+
+.newfile {
+    width : 35em;
+    height : 15em;
+    position : absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin : auto;
+}
+
+.gitbuttons {
+    text-align : right;
+    margin-top : -2em;
+}
+
+.selectfile {
+    margin-top : 1.75em;
+    margin-bottom : 1.75em;
+}
+
+

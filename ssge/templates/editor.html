@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+<title>SCAP Editor</title>
+
+<script src="static/codemirror-3.1/lib/codemirror.js"></script>
+<script src="static/codemirror-3.1/mode/xml/xml.js"></script>
+<link rel="stylesheet" href="static/codemirror-3.1/lib/codemirror.css">
+<link rel="stylesheet" href="static/codemirror-3.1/theme/koehler.css">
+
+<script src="static/codemirror-3.1/addon/hint/show-hint.js"></script>
+<script src="static/codemirror-3.1/addon/hint/xml-hint.js"></script>
+<link rel="stylesheet" href="static/codemirror-3.1/addon/hint/show-hint.css">
+<script src="static/codemirror-3.1/addon/edit/closetag.js"></script>
+
+<script src="static/jquery-tooltip/lib/jquery.js"></script> 
+<script src="static/jquery-tooltip/lib/jquery.dimensions.js"></script> 
+<script src="static/jquery-tooltip/jquery.tooltip.js"></script> 
+
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='editor.css') }}">
+</head>
+
+<body>
+{% if filename %}
+<div class="editor">
+    {% if gitfile %}
+        <p>Editing {{ '/'.join(filename.split('/')[1:]) }}</p>
+    {% else %}
+        <p>Editing {{ filename }}</p>
+    {% endif %}
+{% endif %}
+{% if download %}
+    <form method="post" action="{{ download }}">
+    {% if content %}
+        <textarea cols="120" rows="40" name="myTextarea" id="myTextarea">{{ content }}</textarea>
+    {% else %}
+        <textarea cols="120" rows="40" name="myTextarea" id="myTextarea"></textarea>
+    {% endif %}
+
+    <div id="making">Building the content, please wait.
+    <img src="static/wait.gif"/></div>
+
+    {% if gitfile %}
+        <input type="submit" name="patch" value="Get patch">
+    {% else %}
+        <input type="submit" name="download" value="Download">
+    {% endif %}
+    <input type="button" onClick="validate()" value="Validate">
+    <input type="button" onClick="window.location='/'" value="Close">
+    {% if gitfile and format == 'xccdf' %}
+    <div class="gitbuttons">
+        <input type="button" onClick="addRule()" value="Add Rule">
+        <input type="button" onClick="addGroup()" value="Add Group">
+    </div>
+    {% endif %}
+
+    {% if filename %}
+        <input type="hidden" name="filename" id="filename" value="{{ filename }}">
+    {% else %}
+        <input type="hidden" name="filename" id="filename" value="result.xml">
+    {% endif %}
+
+    {% if gitfile %}
+        <input type="hidden" value="yes" id="gitfile">
+    {% else %}
+        <input type="hidden" value="no" id="gitfile">
+    {% endif %}
+
+    {% if format %}
+        <input type="hidden" value="{{ format }}" id="format">
+    {% endif %}
+    </form>
+</div>
+{% endif %}
+
+{% if gitfile %}
+<script>
+    var groupTemplate = "\n<Group id=\"NAME\">\n" + 
+    "<title>NAME</title>\n" + 
+    "<description>\n" + 
+    "Description of Group NAME.\n" +
+    "</description>\n\n" +
+    "</Group>\n";
+
+    var ruleTemplate = "\n<Rule id=\"NAME\">\n" + 
+    "<title>NAME</title>\n" + 
+    "<description>\n" + 
+    "Description of Rule NAME.\n" +
+    "</description>\n" +
+    "<oval id=\"FIXME\"/>\n" +
+    "</Rule>\n";
+
+    function addRule() {
+        name = prompt("Enter name for the new rule", "newrule");
+        if (name != null)
+            editor.replaceRange(ruleTemplate.replace(/NAME/g, name), editor.getCursor("end"));
+    }
+
+    function addGroup() {
+        name = prompt("Enter name for the new group", "newgroup");
+        if (name != null)
+            editor.replaceRange(groupTemplate.replace(/NAME/g, name), editor.getCursor("end"));
+    }
+</script>
+{% endif %}
+
+<script>
+    function validate() {
+        {% if gitfile %}
+        $('#making').css('display', 'block');
+        {% endif %}
+
+        $.post('/validate', {text : editor.getValue(),
+            filename : document.getElementById("filename").value,
+            gitfile : document.getElementById("gitfile").value,
+            format : document.getElementById("format").value},
+            function(data) {
+                {% if gitfile %}
+                $('#making').css('display', 'none');
+                {% endif %}
+                alert(data);
+                // TODO http://jqueryui.com/dialog/#default
+            });
+
+    }
+</script>
+
+<script>
+    {% if hints %}
+        {% autoescape false %}
+            CodeMirror.xmlHints = {{ hints }};
+        {% endautoescape %}
+    {% endif %}
+
+    CodeMirror.commands.autocomplete = function(cm) {
+        CodeMirror.showHint(cm, CodeMirror.xmlHint);
+    }
+    function passAndHint(cm) {
+        setTimeout(function() {cm.execCommand("autocomplete");}, 100);
+        return CodeMirror.Pass;
+    }
+
+    var editor = CodeMirror.fromTextArea(document.getElementById("myTextarea"), {
+        mode : 'xml',
+        lineNumbers : true,
+        lineWrapping : true,
+        theme : "koehler",
+        extraKeys : {
+            "'<'" : passAndHint,
+            "' '" : passAndHint,
+            "'='" : passAndHint,
+        },
+        autoCloseTags : true,
+        indentUnit : 0
+    });
+    editor.setSize(1000,700);
+
+    $('.CodeMirror-hint').tooltip();
+</script>
+</body>
+</html>
+
+

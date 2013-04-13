@@ -1,0 +1,58 @@
+{
+    "<": [{"hint": "Group", "help": "An item that can hold other items. It allows an author to collect related items into a common structure and provide descriptive text and references about them."},
+        {"hint": "Rule", "help": "The <xccdf:Rule> element contains the description for a single item of guidance or constraint. <xccdf:Rule> elements form the basis for testing a target platform for compliance with an <xccdf:Benchmark>, for scoring, and for conveying descriptive prose, identifiers, references, and remediation information."},
+        {"hint": "Value", "help": "The <xccdf:Value> element is a named parameter that can be substituted into properties of other elements within the <xccdf:Benchmark>, including the interior of structured check specifications and fix scripts."},
+        {"hint": "Profile", "help": "The <xccdf:Profile> element is a named tailoring for an <xccdf:Benchmark>. While an <xccdf:Benchmark> can be tailored in place by setting properties of various elements, <xccdf:Profile> elements allow one <xccdf:Benchmark> document to hold several independent tailorings."}],
+
+    "<Group ": [{"hint": "id=\"", "help": "Unique element identifier; used by other elements to refer to this element."}],
+    "<Group><": [{"hint": "Value", "help": "<xccdf:Value> elements that belong to this <xccdf:Group>."},
+        {"hint": "Group", "help": "Sub-<xccdf:Groups> under this <xccdf:Group>."},
+        {"hint": "Rule", "help": "<xccdf:Rule> elements that belong to this <xccdf:Group>."},
+        {"hint" : "title", "help": "Gruop title."},
+        {"hint" : "description", "help": "Description of the Group."}],
+
+    "<Value ": [{"hint": "id=\"", "help": "The unique identifier for this element."},
+        {"hint": "type=\"", "help": "The data type of the <xccdf:Value>. A tool may choose any convenient form to store an <xccdf:Value> element\u2019s <xccdf:value> element, but the @type attribute conveys how the <xccdf:Value> should be treated for user input validation purposes during tailoring processing. The @type attribute may also be used to give additional guidance to the user or to validate the user\u2019s input. In the case of a list of values, the @type attribute, if present, applies to all elements of the list individually."},
+        {"hint": "operator=\"", "help": "The operator to be used for comparing this <xccdf:Value> to some part of the test system\u2019s configuration during <xccdf:Rule> checking."},
+        {"hint": "interactive=\"", "help": "Whether tailoring for this <xccdf:Value> should be performed during <xccdf:Benchmark> application. The benchmark consumer may ignore the attribute if asking the user is not feasible or not supported."}],
+    "<Value><": [{"hint" : "title", "help": "Value title."},
+        {"hint" : "description", "help": "Description of the Value."},
+        {"hint": "value", "help": "A simple (number, string, or boolean) value associated with this <xccdf:Value>. At any time an <xccdf:Value> has one active (simple or complex) value. If a selector value has been provided under <xccdf:Profile> selection or tailoring then the active <xccdf:value>/<xccdf:complex-value> is the one with a matching @selector. If there is no provided selector or if the provided selector does not match the @selector attribute of any <xccdf:value> or <xccdf:complex-value>, the active <xccdf:value>/<xccdf:complex-value> is the one with an empty or absent @selector or, failing that, the first <xccdf:value> or <xccdf:complex-value> in the XML. When an <xccdf:Value> is exported or used in text substitution, it is the currently active <xccdf:value> or <xccdf:complex-value> that is actually used. If there are multiple <xccdf:value> and/or <xccdf:complex-value> elements, only one may omit a @selector attribute and no two may have the same @selector value."}],
+
+    "<Rule ": [{"hint": "id=\"", "help": "Unique element identifier used by other elements to refer to this element."},
+        {"hint": "severity=\"", "help": "Severity level code to be used for metrics and tracking."}],
+    "<Rule><": [{"hint": "ident", "help": "A globally meaningful identifier for this <xccdf:Rule>. This may be the name or identifier of a security configuration issue or vulnerability that the <xccdf:Rule> assesses."},
+        {"hint" : "title", "help": "Rule title."},
+        {"hint" : "description", "help": "Description of the Rule."},
+        {"hint" : "oval", "help": "Refference to OVAL check."},
+        {"hint" : "ocil", "help": ""},
+        {"hint" : "ref", "help": ""},
+        {"hint" : "tested", "help": "Information on when and by whoom was the rule tested."},
+        {"hint": "rationale", "help": "Descriptive text giving rationale or motivations for abiding by this <xccdf:Group>/<xccdf:Rule> (i.e., why it is important to the security of the target platform)."}],
+
+    "<oval ": [{"hint": "id", "help": "Refference to OVAL check."},
+        {"hint": "value=\"", "help": "Refference to Value element to be used in the check."}],
+
+    "<ocil ": [{"hint": "clause=\"", "help": ""}],
+
+    "<ref ": [{"hint": "disa=\"", "help": ""},
+        {"hint": "nist=\"", "help": ""}],
+
+    "<tested ": [{"hint": "on=\"", "help": ""},
+        {"hint": "by=\"", "help": ""}],
+
+    "<ident ": [{"hint": "cce=\"", "help": ""}],
+
+    "<Profile ": [{"hint": "id=\"", "help": "Unique identifier for this <xccdf:Profile>."},
+        {"hint": "xmlns=\"", "help": "XML namespace."}],
+    "<Profile><": [{"hint" : "title", "help": "Title of the <xccdf:Profile>."},
+        {"hint" : "description", "help": "Text that describes the <xccdf:Profile>."},
+        {"hint": "select", "help": "Select or deselect <xccdf:Group> and <xccdf:Rule> elements."},
+        {"hint": "refine-value", "help": "Customize the properties of an <xccdf:Value>."}],
+        
+    "<select ": [{"hint": "idref=\"", "help": "The @id value of an <xccdf:Rule> or <xccdf:Group>, or the @cluster-id value of one or more <xccdf:Rule> or <xccdf:Group> elements."},
+        {"hint": "selected=\"", "help": "The new value for the indicated item's @selected property."}],
+
+    "<refine-value ": [{"hint": "idref=\"", "help": "The @id value of an <xccdf:Value> or the @cluster-id value of one or more <xccdf:Value> elements"},
+        {"hint": "selector=\"", "help": "Holds a selector value corresponding to the value of a @selector property in an <xccdf:Value> element's child properties. Properties with a matching @selector are considered active and all other properties are inactive. This may mean that, after selector application, some classes of <xccdf:Value> properties will be completely inactive because none of those properties had a matching @selector. The only exception is the <xccdf:value> and <xccdf:complex-value> properties of an <xccdf:Value> element - if there is no <xccdf:value> or <xccdf:complex-value> property with a matching @selector value then the <xccdf:value>/<xccdf:complex-value> property with an empty or absent @selector attribute becomes active. If there is no such <xccdf:value> or <xccdf:complex-value>, then the first <xccdf:value> or <xccdf:complex-value> listed in the XML becomes active. This reflects the fact that all <xccdf:Value> elements require an active value property at all times."}]
+}
