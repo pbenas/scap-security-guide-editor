@@ -69,7 +69,7 @@ def editor(content, filename, gitfile, format):
         # add hints for oval IDs
         (product, path) = git.productPath(filename)
         shorthand['<oval id='] = []
-        for (id, description) in git.ovalIds[product]:
+        for (id, description) in sorted(git.ovalIds[product]):
             shorthand['<oval id='].append({'hint' : '"' + id + '"', 'help' : description})
         hints = json.dumps(shorthand) + ';'
     else:
