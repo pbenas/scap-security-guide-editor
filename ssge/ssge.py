@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, url_for, Response, redirect
 from werkzeug import secure_filename
 import os.path
 import json
+import sys
 
 from xsdparser import XsdParser
 from validator import Validator
@@ -165,7 +166,10 @@ def newfile(format = 'xccdf'):
 
 
 if __name__ == '__main__':
-    app.run(port = 4444, host = '0.0.0.0', debug = False)
-# change debug to True to find out what has gone wrong, but don't keep it set to
-# True permanently since it brings risk of remote code execution
+    if (len(sys.argv) == 2 and (sys.argv[1].find('--debug') >= 0)):
+        app.run(port = 4444, debug = True)
+    else:
+        app.run(port = 4444, host = '0.0.0.0', debug = False)
+# debug mode brings risk of remote code execution, limit application visibility 
+# to localhost only in debug mode
 
