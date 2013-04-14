@@ -165,7 +165,7 @@ def newfile(format = 'xccdf'):
 
 
 if __name__ == '__main__':
-    app.run(port=4444, debug=False)
+    app.run(port = 4444, host = '0.0.0.0', debug = False)
 # change debug to True to find out what has gone wrong, but don't keep it set to
 # True permanently since it brings risk of remote code execution
 

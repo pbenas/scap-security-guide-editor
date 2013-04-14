@@ -7,7 +7,7 @@ scap-security-guide git repository to ~/.scap-security-guide-git. This repositor
 clone should be used by the ssge tool only. If you need local clone of scap-security-guide
 git repository for any other purposes, clone it somewhere else since your changes would be
 discarded by the editor. When git clone is completed, you should see output like
- * Running on http://127.0.0.1:4444/
+ * Running on http://0.0.0.0:4444/
 The ssge is now running on your computer. To start working with the ssge, open
 http://localhost:4444/ address in your web browser.
 

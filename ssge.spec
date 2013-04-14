@@ -7,7 +7,7 @@ URL:		https://fedorahosted.org/scap-security-guide-editor/
 Source0:	%{name}-%{version}.tar.bz2
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildArch:  noarch 
-Requires:	python-flask git openscap-utils
+Requires:	python-flask python-lxml git openscap-utils
 
 %description
 The scap-security-guide package contains a web-based XCCDF and OVAL editor.
