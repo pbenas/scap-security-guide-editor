@@ -4,9 +4,9 @@ Release:	1%{?dist}
 Summary:	An editor for scap-security-guide project
 License:	PostgreSQL
 URL:		https://fedorahosted.org/scap-security-guide-editor/
-Source0:	%{name}-%{version}.tar.bz2
+Source0:	https://fedorahosted.org/releases/s/c/%name/%{name}-%{version}.tar.bz2
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
-BuildArch:  noarch 
+BuildArch:	noarch 
 Requires:	python-flask python-lxml git openscap-utils
 
 %description
