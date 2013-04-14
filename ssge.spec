@@ -1,12 +1,12 @@
 Name:		scap-security-guide-editor
 Version:	1.0
 Release:	1%{?dist}
-Summary:	An editor for scap-security-guide project.
+Summary:	An editor for scap-security-guide project
 License:	PostgreSQL
 URL:		https://fedorahosted.org/scap-security-guide-editor/
 Source0:	%{name}-%{version}.tar.bz2
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
-
+BuildArch:  noarch 
 Requires:	python-flask git openscap-utils
 
 %description
@@ -36,6 +36,7 @@ rm -rf %{buildroot}
 /usr/share/ssge/
 
 
-
 %changelog
+* Sun Apr 14 2013 Petr Benas <pbenas@redhat.com> - 1.0-1
+- initial packaging
 
