@@ -52,7 +52,7 @@ until this problem is fixed by scap-security-guide developers.
 
 The Close button just brings you back to mode selector screen. When editing an XCCDF
 file, there are 'Add Rule' and 'Add Group' buttons available. These buttons helps with
-adding corresponding tags by generating minimal Rule/Group? template at the cursor
+adding corresponding tags by generating minimal Rule/Group template at the cursor
 position upon pressing.
 
 The scap-security-guide-editor has feature of autocompletion for XCCDF as well as OVAL
