@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Copyright (c) 2013 Petr Benas <pbenas@redhat.com>
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -17,8 +19,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
-#!/usr/bin/env python
 
 from flask import Flask, render_template, request, url_for, Response, redirect
 from werkzeug import secure_filename
@@ -69,7 +69,8 @@ def modeSelector():
             file = request.files['file']
             content = file.read()
             format = recognizer.recognize(content)
-            return editor(content, secure_filename(file.filename), False, format)
+            if (format):
+                return editor(content, secure_filename(file.filename), False, format)
 
     return render_template('modeselector.html', xccdffiles = git.xccdf, ovalfiles = git.oval)
 

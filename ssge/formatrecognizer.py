@@ -27,7 +27,11 @@ class FormatRecognizer:
     def recognize(self, text):
         if (text == ""):
             return
-        root = etree.fromstring(text)
+        try:
+            root = etree.fromstring(text)
+        except etree.XMLSyntaxError, e:
+            return None
+
         xccdf = oval = False
         for nspace in  root.nsmap.values():
             if (nspace.find('oval') > 0):
